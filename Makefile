@@ -32,10 +32,11 @@ run: ## Run gemini-url-context-tool (usage: make run ARGS="...")
 	uv run gemini-url-context-tool $(ARGS)
 
 build: ## Build package
-	uv build
+	uv build --force-pep517
 
-install-global: ## Install globally with uv tool
-	uv tool install . --reinstall
+install-global: build ## Install globally with uv tool (rebuilds and uninstalls first)
+	uv tool uninstall gemini-url-context-tool || true
+	uv tool install .
 
 uninstall-global: ## Uninstall global installation
 	uv tool uninstall gemini-url-context-tool
